@@ -4,6 +4,12 @@ Aplikasi manajemen kehadiran siswa berbasis web yang mengutamakan validitas data
 
 ---
 
+## Pembuat Aplikasi
+* **Nama:** Andra Rizky Fauzi
+* **Peran:** Lead Developer / Programmer
+
+---
+
 ## Fitur Utama
 
 1. Presensi Berbasis Lokasi (Geolocation): Menggunakan Formula Haversine untuk menghitung jarak presisi antara posisi siswa dan titik koordinat sekolah yang telah ditentukan.
@@ -18,7 +24,7 @@ Aplikasi manajemen kehadiran siswa berbasis web yang mengutamakan validitas data
 ## Spesifikasi Teknologi
 
 * Bahasa Pemrograman: PHP 8.2.x
-* Framework: CodeIgniter 4.6.x
+* Framework: CodeIgniter 4.6.4
 * Database: MySQL / MariaDB
 * Frontend: Bootstrap 5, FontAwesome, CSS3 Custom Transitions
 * Library Javascript:
@@ -41,23 +47,28 @@ Letakkan folder proyek ke dalam direktori server Anda (misalnya htdocs atau www)
 2. Ubah nama file env di folder root proyek menjadi .env.
 3. Sesuaikan pengaturan database di dalam file .env tersebut:
 
+```bash
 database.default.hostname = localhost
 database.default.database = db_presensi
 database.default.username = root
 database.default.password = 
-database.default.DBDriver = MySQLi
+database.default.DBDriver = MySQLi`
+```
 
 ### 4. Menjalankan Migrasi
 Buka terminal atau CMD pada direktori proyek, lalu jalankan perintah berikut untuk membuat tabel secara otomatis:
+```bash
 php spark migrate
+```
 
 ### 5. Menjalankan Server
 Jalankan perintah berikut untuk mengaktifkan server lokal:
+```bash
 php spark serve
+```
 
 Akses aplikasi melalui browser pada alamat: http://localhost:8080
 
----
 
 ## Konfigurasi Geolocation dan Radius
 
@@ -69,7 +80,7 @@ Untuk mengatur batasan lokasi presensi, ikuti langkah-langkah berikut:
    * Contoh: Jika diisi 50, maka siswa hanya dapat melakukan presensi jika berada dalam radius 50 meter dari titik koordinat sekolah.
 4. Sistem akan secara otomatis menolak proses presensi jika posisi perangkat siswa berada di luar radius tersebut.
 
----
+
 
 ## Catatan Teknis
 
@@ -80,4 +91,4 @@ Untuk mengatur batasan lokasi presensi, ikuti langkah-langkah berikut:
 ---
 
 ## Kontribusi
-Aplikasi ini dikembangkan untuk kebutuhan sistem informasi sekolah yang transparan dan akuntabel.
+Aplikasi ini dikembangkan oleh Andra Rizky Fauzi untuk kebutuhan sistem informasi sekolah yang transparan dan akuntabel.
