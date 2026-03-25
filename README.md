@@ -88,7 +88,6 @@ Untuk mengatur batasan lokasi presensi, ikuti langkah-langkah berikut:
 * Izin Perangkat: Aplikasi memerlukan izin akses Kamera dan Lokasi (GPS) dari browser pengguna agar fitur utama dapat berjalan.
 * Keamanan Profil: Halaman profil dibatasi hanya untuk pembaruan foto mandiri oleh siswa untuk menjaga integritas data identitas.
 
----
 
 ## Kontribusi
 Aplikasi ini dikembangkan oleh Andra Rizky Fauzi untuk kebutuhan sistem informasi sekolah yang transparan dan akuntabel.
