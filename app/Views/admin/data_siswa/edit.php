@@ -1,0 +1,279 @@
+<?= $this->extend('admin/layout.php') ?>
+
+<?= $this->section('content') ?>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+    :root {
+        --primary-green: #10b981;
+        --dark-emerald: #064e3b;
+        --bg-soft: #f0fdf4;
+        --white: #ffffff;
+        --text-slate: #475569;
+        --error-red: #ef4444;
+    }
+
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--bg-soft);
+        color: #1e293b;
+    }
+
+    /* Header Styling */
+    .header-section {
+        margin-bottom: 2rem;
+        animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .header-section h2 {
+        font-weight: 800;
+        color: var(--dark-emerald);
+        letter-spacing: -0.02em;
+        margin-bottom: 0.25rem;
+    }
+
+    .badge-elite {
+        background: #dcfce7;
+        color: #15803d;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    /* Main Card */
+    .main-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* Form Controls */
+    .form-label {
+        font-weight: 600;
+        color: var(--dark-emerald);
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .form-control, .form-select {
+        border-radius: 12px;
+        padding: 12px 16px;
+        border: 1px solid #e2e8f0;
+        background-color: rgba(255, 255, 255, 0.9);
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary-green);
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        background-color: #fff;
+    }
+
+    /* Section Divider */
+    .form-section-title {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-slate);
+        font-weight: 700;
+        margin: 2rem 0 1.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-section-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #e2e8f0;
+    }
+
+    /* Button Styling */
+    .btn-update {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        border: none;
+        box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+    }
+
+    .btn-update:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.3);
+        filter: brightness(1.1);
+        color: white;
+    }
+
+    .invalid-feedback {
+        font-weight: 500;
+        font-size: 0.8rem;
+        margin-top: 6px;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<?php $validation = \Config\Services::validation(); ?>
+
+<div class="container-fluid py-5 px-4">
+    <div class="header-section text-center">
+        <div class="d-inline-flex align-items-center gap-3 mb-3">
+            <div style="background: var(--primary-green); padding: 12px; border-radius: 16px; color: white; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);">
+                <i data-lucide="user-cog" size="28"></i>
+            </div>
+            <div class="text-start">
+                <div class="badge-elite">Management System</div>
+                <h2>Edit Profil Siswa</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-card">
+        <form method="post" action="<?= base_url('admin/data_siswa/update/' . $siswa['id']) ?>" enctype="multipart/form-data">
+            <?= csrf_field(); ?>
+
+            <div class="form-section-title">
+                <i data-lucide="info" size="14"></i> Informasi Pribadi
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label class="form-label"><i data-lucide="user" size="16"></i> Nama Lengkap</label>
+                    <input type="text" name="nama" value="<?= old('nama', $siswa['nama'] ?? '') ?>"
+                        class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : '' ?>" placeholder="Masukkan nama lengkap">
+                    <div class="invalid-feedback"><?= $validation->getError('nama') ?></div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label"><i data-lucide="venn-diagram" size="16"></i> Jenis Kelamin</label>
+                    <select name="jenis_kelamin" class="form-select <?= ($validation->hasError('jenis_kelamin')) ? 'is-invalid' : '' ?>">
+                        <option value="">— Pilih Jenis Kelamin —</option>
+                        <option value="L" <?= old('jenis_kelamin', $siswa['jenis_kelamin'] ?? '') == 'L' ? 'selected' : '' ?>>Laki-laki</option>
+                        <option value="P" <?= old('jenis_kelamin', $siswa['jenis_kelamin'] ?? '') == 'P' ? 'selected' : '' ?>>Perempuan</option>
+                    </select>
+                    <div class="invalid-feedback"><?= $validation->getError('jenis_kelamin') ?></div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label"><i data-lucide="phone" size="16"></i> No. Handphone</label>
+                    <input type="text" name="no_handphone" value="<?= old('no_handphone', $siswa['no_handphone'] ?? '') ?>"
+                        class="form-control <?= ($validation->hasError('no_handphone')) ? 'is-invalid' : '' ?>" placeholder="0812...">
+                    <div class="invalid-feedback"><?= $validation->getError('no_handphone') ?></div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label"><i data-lucide="briefcase" size="16"></i> Jabatan</label>
+                    <select name="jabatan" class="form-select <?= ($validation->hasError('jabatan')) ? 'is-invalid' : '' ?>">
+                        <option value="">— Pilih Jabatan —</option>
+                        <?php foreach ($jabatan as $jab) : ?>
+                            <option value="<?= $jab['jabatan'] ?>" <?= old('jabatan', $siswa['jabatan'] ?? '') == $jab['jabatan'] ? 'selected' : '' ?>>
+                                <?= $jab['jabatan'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label"><i data-lucide="map-pin" size="16"></i> Alamat Domisili</label>
+                    <textarea name="alamat" rows="3" class="form-control <?= ($validation->hasError('alamat')) ? 'is-invalid' : '' ?>" 
+                        placeholder="Tulis alamat lengkap..."><?= old('alamat', $siswa['alamat'] ?? '') ?></textarea>
+                    <div class="invalid-feedback"><?= $validation->getError('alamat') ?></div>
+                </div>
+            </div>
+
+            <div class="form-section-title">
+                <i data-lucide="shield-check" size="14"></i> Pengaturan Akun & Akses
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label class="form-label"><i data-lucide="map" size="16"></i> Lokasi Presensi</label>
+                    <select name="lokasi_presensi" class="form-select <?= ($validation->hasError('lokasi_presensi')) ? 'is-invalid' : '' ?>">
+                        <option value="">— Pilih Lokasi —</option>
+                        <?php foreach ($lokasi_presensi as $lok) : ?>
+                            <option value="<?= $lok['id'] ?>" <?= old('lokasi_presensi', $siswa['lokasi_presensi'] ?? '') == $lok['id'] ? 'selected' : '' ?>>
+                                <?= $lok['nama_lokasi'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label"><i data-lucide="fingerprint" size="16"></i> Hak Akses (Role)</label>
+                    <select name="role" class="form-select <?= ($validation->hasError('role')) ? 'is-invalid' : '' ?>">
+                        <option value="">— Pilih Role —</option>
+                        <option value="Admin" <?= old('role', $siswa['role'] ?? '') == 'Admin' ? 'selected' : '' ?>>Admin</option>
+                        <option value="Siswa" <?= old('role', $siswa['role'] ?? '') == 'Siswa' ? 'selected' : '' ?>>Siswa</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="form-label"><i data-lucide="at-sign" size="16"></i> Username</label>
+                    <input type="text" name="username" value="<?= old('username', $siswa['username'] ?? '') ?>"
+                        class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : '' ?>" placeholder="Username akun">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label"><i data-lucide="lock" size="16"></i> Password Baru</label>
+                    <input type="password" name="password" class="form-control" placeholder="••••••••">
+                    <small class="text-muted mt-1 d-block">Kosongkan jika tidak ingin mengubah password.</small>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label"><i data-lucide="lock-keyhole" size="16"></i> Konfirmasi Password</label>
+                    <input type="password" name="konfirmasi_password" class="form-control" placeholder="••••••••">
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label"><i data-lucide="image" size="16"></i> Foto Profil</label>
+                    <div class="p-3 border rounded-3 bg-light d-flex align-items-center gap-3">
+                        <input type="hidden" name="foto_lama" value="<?= $siswa['foto'] ?? '' ?>">
+                        <input type="file" name="foto" class="form-control <?= ($validation->hasError('foto')) ? 'is-invalid' : '' ?>">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-update w-100 mt-5">
+                <i data-lucide="save" size="20" class="me-2"></i> Simpan Perubahan Data
+            </button>
+            
+            <a href="<?= base_url('admin/data_siswa') ?>" class="btn btn-link w-100 mt-2 text-decoration-none text-muted">
+                Batal dan Kembali
+            </a>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+</script>
+
+<?= $this->endSection() ?>
