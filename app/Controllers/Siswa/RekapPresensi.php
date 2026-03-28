@@ -131,7 +131,7 @@ if (isset($_GET['excel'])) {
 }
 
         $data = [
-            'title'          => 'Rekap Presensi',
+            'title'          => '',
             'rekap_presensi' => $rekap_presensi,
             'tanggal'        => $filter_tanggal
         ];
